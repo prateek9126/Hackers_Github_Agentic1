@@ -1,0 +1,148 @@
+# ==============================================================================
+# SIH26153 System Configuration
+# ==============================================================================
+
+app:
+  name: "SIH26153 AI-Based Network Attack Forecaster"
+  version: "1.0.0"
+  offline_mode: true
+  random_seed: 42
+
+# Temporal Window Discretization
+temporal:
+  # Window duration in seconds (Δt)
+  window_duration_sec: 10.0
+  # Observation window length (W) in number of steps
+  history_window_size: 4
+  # Forecast horizon (K) in number of forward steps
+  forecast_horizon: 3
+  # Stride/Hop for sliding window generation (seconds)
+  stride_sec: 5.0
+
+# Feature Extraction Pipeline
+features:
+  # Feature vector dimensionality
+  dimension: 36
+  volumetric:
+    - total_bytes
+    - total_packets
+    - byte_rate
+    - packet_rate
+    - fwd_bwd_byte_ratio
+    - fwd_bwd_packet_ratio
+    - avg_packet_size
+    - packet_size_std
+  tcp_flags:
+    - syn_count
+    - ack_count
+    - fin_count
+    - rst_count
+    - psh_count
+    - urg_count
+    - syn_ack_ratio
+    - rst_ratio
+  connection_dynamics:
+    - total_flows
+    - active_flows
+    - failed_conn_ratio
+    - half_open_ratio
+    - short_flow_ratio
+    - avg_flow_duration
+  graph_topological:
+    - unique_src_ips
+    - unique_dst_ips
+    - fanout_ratio
+    - unique_dst_ports
+    - src_port_entropy
+    - dst_port_entropy
+    - ip_entropy
+  protocol_distribution:
+    - http_ratio
+    - https_ratio
+    - dns_ratio
+    - ssh_ratio
+    - smb_ratio
+    - icmp_ratio
+    - other_proto_ratio
+
+# Attack Stage Taxonomy
+taxonomy:
+  stages:
+    - NORMAL
+    - RECONNAISSANCE
+    - SCANNING
+    - INITIAL_ACCESS
+    - EXPLOITATION
+    - CREDENTIAL_ACCESS
+    - LATERAL_MOVEMENT
+    - COMMAND_AND_CONTROL
+    - EXFILTRATION
+    - IMPACT_DOS
+  num_classes: 10
+
+# Dataset Translation Mappings
+dataset_mappings:
+  cic_ids_2017:
+    BENIGN: NORMAL
+    PortScan: SCANNING
+    DDoS: IMPACT_DOS
+    DoS Hulk: IMPACT_DOS
+    DoS GoldenEye: IMPACT_DOS
+    DoS slowloris: IMPACT_DOS
+    DoS Slowhttptest: IMPACT_DOS
+    FTP-Patator: CREDENTIAL_ACCESS
+    SSH-Patator: CREDENTIAL_ACCESS
+    Web Attack – Brute Force: CREDENTIAL_ACCESS
+    Web Attack – XSS: EXPLOITATION
+    Web Attack – Sql Injection: EXPLOITATION
+    Infiltration: LATERAL_MOVEMENT
+    Bot: COMMAND_AND_CONTROL
+    Heartbleed: EXPLOITATION
+
+# Machine Learning Models
+models:
+  baseline_markov:
+    smoothing_alpha: 1e-4
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+  lstm:
+    input_dim: 36
+    hidden_dim: 128
+    num_layers: 2
+    dropout: 0.2
+    bidirectional: false
+    learning_rate: 0.001
+    weight_decay: 1e-5
+    gamma_decay: 0.85 # Discount factor for multi-horizon loss
+    batch_size: 64
+    epochs: 50
+    early_stopping_patience: 10
+
+# Explainability
+explainability:
+  method: "integrated_gradients" # Options: integrated_gradients, shap
+  n_steps: 50
+  baseline: "zero" # baseline vector for attribution
+
+# What-If Defense Simulation
+simulation:
+  actions:
+    - id: "ACTION_ISOLATE_HOST"
+      name: "Isolate Compromised Host Subnet"
+      affected_features: ["unique_dst_ips", "fanout_ratio", "total_flows", "byte_rate"]
+      impact_multiplier: 0.05
+    - id: "ACTION_BLOCK_PORT"
+      name: "Drop Traffic on Target Port"
+      affected_features: ["unique_dst_ports", "dst_port_entropy", "failed_conn_ratio"]
+      impact_multiplier: 0.10
+    - id: "ACTION_RATE_LIMIT_SYN"
+      name: "Apply SYN Flood Protection / Rate Limiter"
+      affected_features: ["syn_count", "syn_ack_ratio", "packet_rate"]
+      impact_multiplier: 0.20
+    - id: "ACTION_BLOCK_C2_DOMAIN"
+      name: "Sinkhole C2 Domain at DNS Resolver"
+      affected_features: ["dns_ratio", "failed_conn_ratio", "byte_rate"]
+      impact_multiplier: 0.15

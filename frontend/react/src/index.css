@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-cyber-950 text-slate-100 font-sans;
+  }
+}
+
+/* Custom Cyber Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0b1220;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e3156;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}
+
+/* Terminal Glassmorphism & Cyber Borders */
+.cyber-card {
+  background: linear-gradient(135deg, rgba(16, 26, 46, 0.8) 0%, rgba(11, 18, 32, 0.9) 100%);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.cyber-card:hover {
+  border-color: rgba(0, 240, 255, 0.35);
+}
+
+.cyber-card-danger {
+  background: linear-gradient(135deg, rgba(40, 10, 20, 0.8) 0%, rgba(20, 5, 10, 0.9) 100%);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.15);
+}
+
+.cyber-card-success {
+  background: linear-gradient(135deg, rgba(10, 40, 25, 0.8) 0%, rgba(5, 20, 15, 0.9) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+}
+
+/* Attack Progression Timeline Animations */
+@keyframes timelineLaserFlow {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.animate-laser-pulse {
+  animation: timelineLaserFlow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes cyberNodePing {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-cyber-ping {
+  animation: cyberNodePing 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}

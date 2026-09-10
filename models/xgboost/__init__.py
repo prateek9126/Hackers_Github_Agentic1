@@ -1,0 +1,3 @@
+"""
+Windowed XGBoost classifier baseline.
+"""

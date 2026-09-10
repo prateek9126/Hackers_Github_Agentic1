@@ -1,0 +1,257 @@
+{
+  "techniques": [
+    {
+      "technique_id": "T1595.001",
+      "technique_name": "Active Scanning: Port Scanning",
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "primary_stage": 2,
+      "description": "Adversaries probe victim networks across port ranges to detect listening services.",
+      "telemetry_rules": [
+        {
+          "feature": "dst_port_entropy",
+          "condition": "gt",
+          "threshold": 1.0,
+          "evidence": "Elevated destination port entropy indicates systematic probing across port spectrum."
+        },
+        {
+          "feature": "unique_dst_ports",
+          "condition": "gt",
+          "threshold": 4.0,
+          "evidence": "Multiple distinct destination ports contacted within short time window."
+        }
+      ],
+      "base_confidence": 0.85
+    },
+    {
+      "technique_id": "T1595.002",
+      "technique_name": "Active Scanning: Vulnerability Scanning",
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "primary_stage": 2,
+      "description": "Adversaries execute scans to identify known vulnerable software versions.",
+      "telemetry_rules": [
+        {
+          "feature": "syn_flow_ratio",
+          "condition": "gt",
+          "threshold": 0.35,
+          "evidence": "High ratio of SYN attempts to established sessions indicates automated scanning probes."
+        },
+        {
+          "feature": "fanout_ratio",
+          "condition": "gt",
+          "threshold": 2.0,
+          "evidence": "High fanout ratio demonstrates probing fanout across multiple target hosts."
+        }
+      ],
+      "base_confidence": 0.80
+    },
+    {
+      "technique_id": "T1046",
+      "technique_name": "Network Service Scanning",
+      "tactic_id": "TA0043",
+      "tactic_name": "Reconnaissance",
+      "primary_stage": 2,
+      "description": "Adversaries search for active services on hosts to find vulnerable listening endpoints.",
+      "telemetry_rules": [
+        {
+          "feature": "connection_rate",
+          "condition": "gt",
+          "threshold": 3.0,
+          "evidence": "High connection arrival rate consistent with systematic network service sweep."
+        },
+        {
+          "feature": "failed_conn_ratio",
+          "condition": "gt",
+          "threshold": 0.3,
+          "evidence": "Elevated failed connection ratio reflects attempts against non-listening closed ports."
+        }
+      ],
+      "base_confidence": 0.82
+    },
+    {
+      "technique_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "primary_stage": 3,
+      "description": "Adversaries exploit weaknesses in Internet-facing programs to gain initial access.",
+      "telemetry_rules": [
+        {
+          "feature": "fwd_bytes",
+          "condition": "gt",
+          "threshold": 2000.0,
+          "evidence": "Substantial inbound payload transferred toward public listening port."
+        },
+        {
+          "feature": "rst_ratio",
+          "condition": "gt",
+          "threshold": 0.2,
+          "evidence": "Unexpected connection reset behavior following application-level payload delivery."
+        }
+      ],
+      "base_confidence": 0.78
+    },
+    {
+      "technique_id": "T1203",
+      "technique_name": "Exploitation for Client Execution",
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "primary_stage": 4,
+      "description": "Adversaries execute rogue code by exploiting vulnerabilities in target processes.",
+      "telemetry_rules": [
+        {
+          "feature": "retransmission_rate",
+          "condition": "gt",
+          "threshold": 0.05,
+          "evidence": "Network retransmission spikes correlate with target process instability during exploit attempts."
+        },
+        {
+          "feature": "packet_size_std",
+          "condition": "gt",
+          "threshold": 100.0,
+          "evidence": "High packet size variance reflects exploit payload staging and shellcode injection."
+        }
+      ],
+      "base_confidence": 0.75
+    },
+    {
+      "technique_id": "T1110",
+      "technique_name": "Brute Force: Credential Spraying",
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "primary_stage": 5,
+      "description": "Adversaries repeatedly test passwords against accounts to gain valid access.",
+      "telemetry_rules": [
+        {
+          "feature": "failed_conn_ratio",
+          "condition": "gt",
+          "threshold": 0.5,
+          "evidence": "Extreme failed connection ratio signifies repeated rejected authentication requests."
+        },
+        {
+          "feature": "connection_rate",
+          "condition": "gt",
+          "threshold": 5.0,
+          "evidence": "Rapid sequential connection attempts against authentication services."
+        }
+      ],
+      "base_confidence": 0.85
+    },
+    {
+      "technique_id": "T1021",
+      "technique_name": "Remote Services: Pivoting & Lateral Movement",
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "primary_stage": 6,
+      "description": "Adversaries log into adjacent internal hosts using remote protocols like SSH, RDP, or SMB.",
+      "telemetry_rules": [
+        {
+          "feature": "unique_dst_ips",
+          "condition": "gt",
+          "threshold": 2.0,
+          "evidence": "Connections spreading across multiple distinct internal destination endpoints."
+        },
+        {
+          "feature": "tcp_ratio",
+          "condition": "gt",
+          "threshold": 0.7,
+          "evidence": "Dominance of reliable TCP sessions typical of management remote desktop and terminal protocols."
+        }
+      ],
+      "base_confidence": 0.80
+    },
+    {
+      "technique_id": "T1071.001",
+      "technique_name": "Application Layer Protocol: Web C2 Beaconing",
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "primary_stage": 7,
+      "description": "Adversaries communicate with command infrastructure over standard HTTP/HTTPS protocols.",
+      "telemetry_rules": [
+        {
+          "feature": "iat_std",
+          "condition": "lt",
+          "threshold": 5.0,
+          "evidence": "Low inter-arrival time standard deviation reveals persistent periodic beaconing heartbeat."
+        },
+        {
+          "feature": "tcp_ratio",
+          "condition": "gt",
+          "threshold": 0.6,
+          "evidence": "Web protocol encapsulation over standard TCP session."
+        }
+      ],
+      "base_confidence": 0.88
+    },
+    {
+      "technique_id": "T1048",
+      "technique_name": "Exfiltration Over Alternative Protocol",
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "primary_stage": 8,
+      "description": "Adversaries steal sensitive data by transmitting it over non-standard network channels.",
+      "telemetry_rules": [
+        {
+          "feature": "byte_rate",
+          "condition": "gt",
+          "threshold": 500.0,
+          "evidence": "Elevated outbound data transmission rate indicates bulk egress of compressed data."
+        },
+        {
+          "feature": "fwd_bwd_byte_ratio",
+          "condition": "lt",
+          "threshold": 0.3,
+          "evidence": "Severe outbound byte asymmetry (outbound volume heavily outweighs inbound responses)."
+        }
+      ],
+      "base_confidence": 0.90
+    },
+    {
+      "technique_id": "T1041",
+      "technique_name": "Exfiltration Over C2 Channel",
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "primary_stage": 8,
+      "description": "Adversaries steal data by siphoning it through existing command and control infrastructure.",
+      "telemetry_rules": [
+        {
+          "feature": "bwd_bytes",
+          "condition": "gt",
+          "threshold": 5000.0,
+          "evidence": "High cumulative outbound byte count along established command channel."
+        },
+        {
+          "feature": "flow_duration_mean",
+          "condition": "gt",
+          "threshold": 5.0,
+          "evidence": "Long-lived flow duration consistent with streaming bulk exfiltration transfer."
+        }
+      ],
+      "base_confidence": 0.86
+    },
+    {
+      "technique_id": "T1498",
+      "technique_name": "Network Denial of Service: Flood Attack",
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "primary_stage": 9,
+      "description": "Adversaries degrade target network availability through high-volume traffic flooding.",
+      "telemetry_rules": [
+        {
+          "feature": "packet_rate",
+          "condition": "gt",
+          "threshold": 200.0,
+          "evidence": "Extreme packet transmission rate consistent with volumetric network flood."
+        },
+        {
+          "feature": "burst_coefficient_var",
+          "condition": "gt",
+          "threshold": 1.5,
+          "evidence": "High burst coefficient of variation indicates coordinated volumetric pulsing."
+        }
+      ],
+      "base_confidence": 0.92
+    }
+  ]
+}
