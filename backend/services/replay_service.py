@@ -37,6 +37,14 @@ class BackendReplayService:
         # Initialize dataset scenarios
         self.scenarios = self._initialize_scenarios()
 
+        # Pre-load demo PCAP scenario if available
+        demo_path = os.path.join("data", "samples", "demo_attack_progression.pcap")
+        if os.path.exists(demo_path):
+            try:
+                self.load_uploaded_pcap(demo_path, "demo_attack_progression.pcap", 20.0, is_demo=True)
+            except Exception as e:
+                logger.warning(f"Could not pre-load demo PCAP: {e}")
+
     def _initialize_scenarios(self) -> Dict[str, Dict[str, Any]]:
         """Prepares metadata and sequences for available replay scenarios."""
         scenarios = {}
@@ -149,6 +157,7 @@ class BackendReplayService:
         file_path: str,
         original_filename: str,
         window_duration_sec: float = 20.0,
+        is_demo: bool = False,
     ) -> Dict[str, Any]:
         """
         Dynamically ingests, validates, parses, windowizes, and analyzes an uploaded PCAP file.
@@ -254,15 +263,15 @@ class BackendReplayService:
             })
 
         # Register uploaded PCAP scenario dynamically
-        scenario_id = f"upload_{len(self.scenarios) + 1}"
+        scenario_id = "demo_pcap" if is_demo else f"upload_{len(self.scenarios) + 1}"
         scenario_data = {
             "id": scenario_id,
             "name": f"{original_filename}",
-            "type": "UPLOADED_PCAP",
+            "type": "DEMO_PCAP" if is_demo else "UPLOADED_PCAP",
             "total_steps": num_windows,
             "window_duration_sec": window_duration_sec,
             "description": (
-                f"Uploaded Capture: {original_filename} ({total_packets} packets, "
+                f"{'Built-in Demo Attack Progression' if is_demo else 'Uploaded Capture'}: {original_filename} ({total_packets} packets, "
                 f"{round(total_duration, 1)}s duration, {num_windows} causal windows of {window_duration_sec}s). "
                 f"Ground truth is UNAVAILABLE."
             ),
@@ -283,7 +292,7 @@ class BackendReplayService:
             "message": f"Successfully parsed and analyzed {original_filename} into {num_windows} chronological time windows.",
             "scenario_id": scenario_id,
             "scenario_name": original_filename,
-            "scenario_type": "UPLOADED_PCAP",
+            "scenario_type": "DEMO_PCAP" if is_demo else "UPLOADED_PCAP",
             "filename": original_filename,
             "file_size_bytes": file_size,
             "packet_count": total_packets,

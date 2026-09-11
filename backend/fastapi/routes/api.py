@@ -305,3 +305,59 @@ async def upload_pcap(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to process PCAP file: {str(e)}")
 
+
+# 13. Built-in Demonstration PCAP Loader Route
+@router.post("/pcap/demo", response_model=PcapUploadResponse)
+def load_demo_pcap(window_duration_sec: float = Query(20.0)):
+    """
+    Loads and analyzes the built-in multi-stage demo attack progression PCAP.
+    """
+    demo_path = os.path.join("data", "samples", "demo_attack_progression.pcap")
+    if not os.path.exists(demo_path):
+        upload_samples = [
+            os.path.join("data", "uploads", f)
+            for f in os.listdir("data/uploads")
+            if "demo_attack_progression" in f
+        ]
+        if upload_samples:
+            demo_path = upload_samples[0]
+        else:
+            raise HTTPException(status_code=404, detail="Demo PCAP file not found.")
+
+    try:
+        result = _replay_service.load_uploaded_pcap(
+            file_path=demo_path,
+            original_filename="demo_attack_progression.pcap",
+            window_duration_sec=float(window_duration_sec or 20.0),
+            is_demo=True,
+        )
+        return PcapUploadResponse(**result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to load demo PCAP: {str(e)}")
+
+
+@router.get("/pcap/demo-file")
+def get_demo_pcap_file():
+    """
+    Returns binary file content of sample demo attack progression PCAP for direct download.
+    """
+    from fastapi.responses import FileResponse
+
+    demo_path = os.path.join("data", "samples", "demo_attack_progression.pcap")
+    if not os.path.exists(demo_path):
+        upload_samples = [
+            os.path.join("data", "uploads", f)
+            for f in os.listdir("data/uploads")
+            if "demo_attack_progression" in f
+        ]
+        if upload_samples:
+            demo_path = upload_samples[0]
+        else:
+            raise HTTPException(status_code=404, detail="Demo PCAP file not found.")
+
+    return FileResponse(
+        path=demo_path,
+        media_type="application/vnd.tcpdump.pcap",
+        filename="demo_attack_progression.pcap",
+    )
+

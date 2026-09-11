@@ -69,6 +69,7 @@ data/processed/*
 *.pcap
 *.pcapng
 *.cap
+!data/samples/*.pcap
 *.log
 
 # Model artifacts and checkpoints

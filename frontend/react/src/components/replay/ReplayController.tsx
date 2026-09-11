@@ -14,8 +14,11 @@ import {
   AlertCircle,
   Loader2,
   ShieldAlert,
+  Download,
+  Sparkles,
 } from "lucide-react";
 import { ReplayTimelineResponse, ReplayTimelineStep } from "../../types/api";
+import { apiService } from "../../services/api";
 
 interface ReplayControllerProps {
   timelineData: ReplayTimelineResponse | null;
@@ -31,6 +34,8 @@ interface ReplayControllerProps {
   onUploadPcap?: (file: File, windowDurationSec: number) => Promise<void>;
   isUploading?: boolean;
   uploadError?: string | null;
+  onLoadDemoPcap?: (windowDurationSec: number) => Promise<void>;
+  isDemoLoading?: boolean;
 }
 
 export const ReplayController: React.FC<ReplayControllerProps> = ({
@@ -47,6 +52,8 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
   onUploadPcap,
   isUploading = false,
   uploadError = null,
+  onLoadDemoPcap,
+  isDemoLoading = false,
 }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [windowSec, setWindowSec] = useState<number>(20);
@@ -55,7 +62,8 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
 
   const totalSteps = timelineData?.total_steps || 10;
   const steps = timelineData?.timeline || [];
-  const isUploadedMode = timelineData?.scenario_type === "UPLOADED_PCAP";
+  const isDemoPcap = timelineData?.scenario_type === "DEMO_PCAP" || selectedScenario === "demo_pcap";
+  const isUploadedMode = timelineData?.scenario_type === "UPLOADED_PCAP" || isDemoPcap;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalError(null);
@@ -86,6 +94,17 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
     }
   };
 
+  const handleTriggerDemo = async () => {
+    if (!onLoadDemoPcap) return;
+    try {
+      setLocalError(null);
+      setSelectedFile(null);
+      await onLoadDemoPcap(windowSec);
+    } catch (err: any) {
+      setLocalError(err?.message || "Demo PCAP load failed.");
+    }
+  };
+
   return (
     <div className="cyber-card rounded-xl p-5 border border-cyan-500/40 bg-cyber-900/90 shadow-2xl font-mono text-xs space-y-4">
       {/* Top Banner & Scenario Selector */}
@@ -101,12 +120,14 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
               </span>
               <span
                 className={`font-bold px-2 py-0.5 rounded text-[10px] border ${
-                  isUploadedMode
+                  isDemoPcap
+                    ? "bg-cyan-950/90 text-cyan-300 border-cyan-400/80"
+                    : isUploadedMode
                     ? "bg-cyan-950/90 text-cyan-300 border-cyan-500/60"
                     : "bg-amber-950/80 text-amber-400 border-amber-700"
                 }`}
               >
-                Source: {isUploadedMode ? "UPLOADED PCAP" : timelineData?.scenario_type || "DEMO/SYNTHETIC"}
+                Source: {isDemoPcap ? "DEMO PCAP" : isUploadedMode ? "UPLOADED PCAP" : timelineData?.scenario_type || "DEMO/SYNTHETIC"}
               </span>
             </div>
             <p className="text-[11px] text-slate-400 mt-0.5">
@@ -134,6 +155,7 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
               <>
                 <option value="synthetic">Demo/Synthetic (10 Windows)</option>
                 <option value="ctu13">CTU-13 Scenario 5 (Virut Real Dataset)</option>
+                <option value="demo_pcap">demo_attack_progression.pcap (DEMO_PCAP)</option>
               </>
             )}
           </select>
@@ -152,12 +174,45 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
           />
           <button
             onClick={() => fileInputRef.current?.click()}
-            disabled={isUploading}
+            disabled={isUploading || isDemoLoading}
             className="flex items-center space-x-1.5 px-3 py-1.5 rounded bg-slate-900 border border-slate-700 text-slate-200 hover:text-cyan-400 hover:border-cyan-500/50 transition-all text-xs font-bold"
           >
             <Upload className="w-3.5 h-3.5" />
             <span>{selectedFile ? "Change PCAP" : "Upload PCAP"}</span>
           </button>
+
+          {/* Demo PCAP Button */}
+          {onLoadDemoPcap && (
+            <button
+              onClick={handleTriggerDemo}
+              disabled={isUploading || isDemoLoading}
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded bg-gradient-to-r from-cyan-950/90 via-blue-950/80 to-slate-900 border border-cyan-500/60 text-cyan-300 hover:border-cyan-400 hover:text-cyan-100 hover:shadow-cyan-500/20 hover:shadow-md transition-all text-xs font-bold disabled:opacity-50"
+              title="Load and analyze the pre-configured demo attack progression PCAP file"
+            >
+              {isDemoLoading ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-cyan-400" />
+                  <span>Loading Demo...</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                  <span>Demo PCAP</span>
+                </>
+              )}
+            </button>
+          )}
+
+          {/* Download Sample File */}
+          <a
+            href={apiService.getDemoPcapFileUrl()}
+            download="demo_attack_progression.pcap"
+            className="flex items-center space-x-1 px-2.5 py-1.5 rounded bg-slate-900/90 border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-600 transition-all text-[11px]"
+            title="Download demo_attack_progression.pcap sample file (22 KB)"
+          >
+            <Download className="w-3 h-3 text-cyan-400" />
+            <span>Sample .pcap</span>
+          </a>
 
           {/* Window Duration Selector */}
           <div className="flex items-center space-x-1.5 bg-slate-900 px-2 py-1 rounded border border-slate-800 text-slate-400 text-[11px]">
@@ -187,7 +242,7 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
           {/* Analyze Button */}
           <button
             onClick={handleTriggerAnalyze}
-            disabled={!selectedFile || isUploading}
+            disabled={!selectedFile || isUploading || isDemoLoading}
             className="flex items-center space-x-1.5 px-4 py-1.5 rounded-lg bg-emerald-600 text-slate-950 hover:bg-emerald-500 font-bold text-xs shadow-md shadow-emerald-500/20 disabled:opacity-40 transition-all"
           >
             {isUploading ? (

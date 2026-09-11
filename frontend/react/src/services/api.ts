@@ -592,4 +592,23 @@ export const apiService = {
     }
     return (await res.json()) as PcapUploadResponse;
   },
+
+  async loadDemoPcap(windowDurationSec: number = 20.0): Promise<PcapUploadResponse> {
+    const res = await fetch(`${API_BASE}/pcap/demo?window_duration_sec=${windowDurationSec}`, {
+      method: "POST",
+    });
+    if (!res.ok) {
+      let errMsg = `Failed to load demo PCAP with status ${res.status}`;
+      try {
+        const errJson = await res.json();
+        if (errJson.detail) errMsg = errJson.detail;
+      } catch {}
+      throw new Error(errMsg);
+    }
+    return (await res.json()) as PcapUploadResponse;
+  },
+
+  getDemoPcapFileUrl(): string {
+    return `${API_BASE}/pcap/demo-file`;
+  },
 };

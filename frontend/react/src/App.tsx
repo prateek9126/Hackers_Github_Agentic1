@@ -68,6 +68,7 @@ export const App: React.FC = () => {
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [leadTimeEvaluations, setLeadTimeEvaluations] = useState<LeadTimeEvaluation[]>([]);
   const [isUploadingPcap, setIsUploadingPcap] = useState(false);
+  const [isDemoPcapLoading, setIsDemoPcapLoading] = useState(false);
   const [pcapUploadError, setPcapUploadError] = useState<string | null>(null);
 
   // Timer Ref for Replay
@@ -232,6 +233,46 @@ export const App: React.FC = () => {
     }
   };
 
+  // 5b. Demo PCAP Loader Handler
+  const handleLoadDemoPcap = async (windowDurationSec: number = 20) => {
+    setIsDemoPcapLoading(true);
+    setPcapUploadError(null);
+    try {
+      const demoRes = await apiService.loadDemoPcap(windowDurationSec);
+      setSelectedScenario(demoRes.scenario_id);
+      setIsPlaying(false);
+      setReplayStep(0);
+      setLeadTimeEvaluations([]);
+      await apiService.resetReplay();
+
+      const tl = await apiService.getReplayTimeline(demoRes.scenario_id);
+      setReplayTimeline(tl);
+
+      const res = await apiService.executeReplayStep({
+        scenario_id: demoRes.scenario_id,
+        step_index: 0,
+        horizon: 5,
+      });
+      setCurrentState(res.current_state);
+      setForecast(res.forecast);
+      setTrajectory(res.trajectory);
+      setLeadTimeEvaluations(res.lead_time_evaluations);
+
+      const [ex, mi] = await Promise.all([
+        apiService.getExplanation(4),
+        apiService.getMitre(),
+      ]);
+      setExplanation(ex);
+      setMitre(mi);
+    } catch (err: any) {
+      console.error("Demo PCAP load error:", err);
+      setPcapUploadError(err.message || "Failed to load demo PCAP.");
+      throw err;
+    } finally {
+      setIsDemoPcapLoading(false);
+    }
+  };
+
   // 6. Replay Scenario Change
   const handleScenarioChange = async (scenario: string) => {
     setSelectedScenario(scenario);
@@ -337,6 +378,8 @@ export const App: React.FC = () => {
             onUploadPcap={handleUploadPcap}
             isUploading={isUploadingPcap}
             uploadError={pcapUploadError}
+            onLoadDemoPcap={handleLoadDemoPcap}
+            isDemoLoading={isDemoPcapLoading}
             leadTimeEvaluations={leadTimeEvaluations}
             explanation={explanation}
             mitre={mitre}

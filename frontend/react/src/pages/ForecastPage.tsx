@@ -32,6 +32,8 @@ interface ForecastPageProps {
   onUploadPcap: (file: File, windowDurationSec: number) => Promise<void>;
   isUploading: boolean;
   uploadError: string | null;
+  onLoadDemoPcap?: (windowDurationSec: number) => Promise<void>;
+  isDemoLoading?: boolean;
   leadTimeEvaluations: LeadTimeEvaluation[];
   explanation?: ExplanationResponse | null;
   mitre?: MitreMappingResponse | null;
@@ -54,6 +56,8 @@ export const ForecastPage: React.FC<ForecastPageProps> = ({
   onUploadPcap,
   isUploading,
   uploadError,
+  onLoadDemoPcap,
+  isDemoLoading = false,
   leadTimeEvaluations,
   explanation,
   mitre,
@@ -146,6 +150,8 @@ export const ForecastPage: React.FC<ForecastPageProps> = ({
           onUploadPcap={onUploadPcap}
           isUploading={isUploading}
           uploadError={uploadError}
+          onLoadDemoPcap={onLoadDemoPcap}
+          isDemoLoading={isDemoLoading}
         />
       </div>
 
