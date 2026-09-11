@@ -16,7 +16,11 @@ class Settings(BaseSettings):
     APP_HOST: str = "0.0.0.0"
     APP_PORT: int = 8000
 
-    # PostgreSQL Database Credentials
+    # Database Configuration (Defaults to offline SQLite for 100% standalone reliability)
+    DB_ENGINE: str = "sqlite"
+    USE_POSTGRES: bool = False
+
+    # PostgreSQL Database Credentials (used when USE_POSTGRES=true)
     POSTGRES_USER: str = "postgres"
     POSTGRES_PASSWORD: str = "postgres_secure_password"
     POSTGRES_SERVER: str = "localhost"
