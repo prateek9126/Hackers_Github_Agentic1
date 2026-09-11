@@ -1,6 +1,5 @@
-# SIH26153 — AI-Based Network Attack Progression Forecasting from Network Traffic Data
+AI-Based Network Attack Progression Forecasting from Network Traffic Data
 
-> **Smart India Hackathon 2026** | Problem Statement ID: **SIH26153**  
 > **Offline-Capable Temporal Network World Model & Multi-Step Attack Trajectory Forecaster**
 
 [![Test Suite](https://img.shields.io/badge/Unit%20Tests-62%20Passed-emerald)](https://github.com/)
