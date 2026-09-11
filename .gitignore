@@ -64,21 +64,22 @@ coverage.xml
 # Large datasets and PCAP files (keep samples small in repo)
 data/raw/*
 !data/raw/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
+data/uploads/*
+!data/uploads/.gitkeep
 *.pcap
 *.pcapng
 *.cap
 !data/samples/*.pcap
 *.log
 
-# Model artifacts and checkpoints
+# Allow bundled checkpoints and evaluation datasets
+!models/checkpoints/*
+!data/processed/*
+
+# Ignore other model artifacts
 *.pt
-*.pth
 *.onnx
 *.pkl
-*.joblib
-models/checkpoints/
 
 # Node / Frontend
 frontend/react/node_modules/

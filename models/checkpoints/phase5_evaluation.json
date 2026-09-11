@@ -1,0 +1,248 @@
+{
+  "lstm": {
+    "horizon": 5,
+    "window_duration_sec": 20.0,
+    "total_eval_samples": 9,
+    "k_step_accuracy": {
+      "step_1 (+20s)": 0.2222,
+      "step_2 (+40s)": 0.25,
+      "step_3 (+60s)": 0.2857,
+      "step_4 (+80s)": 0.3333,
+      "step_5 (+100s)": 0.2
+    },
+    "k_step_top2_accuracy": {
+      "step_1 (+20s)": 0.4444,
+      "step_2 (+40s)": 0.5,
+      "step_3 (+60s)": 0.4286,
+      "step_4 (+80s)": 0.5,
+      "step_5 (+100s)": 0.4
+    },
+    "trajectory_exact_match_accuracy": 0.0,
+    "trajectory_average_similarity": 0.28,
+    "forecast_lead_time": {
+      "mean_lead_time_sec": 55.56,
+      "max_lead_time_sec": 100.0,
+      "min_lead_time_sec": 20.0,
+      "total_successful_advance_forecasts": 9,
+      "false_warnings": 10,
+      "by_stage": {
+        "EXFILTRATION": {
+          "successful_forecasts": 9,
+          "mean_lead_time_sec": 55.56,
+          "max_lead_time_sec": 100.0
+        }
+      },
+      "sample_events": [
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 80.0,
+          "step": 4,
+          "t_pred": 0,
+          "t_actual": 4,
+          "confidence": 0.2053905576467514
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 60.0,
+          "step": 3,
+          "t_pred": 1,
+          "t_actual": 4,
+          "confidence": 0.23791168630123138
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 40.0,
+          "step": 2,
+          "t_pred": 2,
+          "t_actual": 4,
+          "confidence": 0.2518513798713684
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 100.0,
+          "step": 5,
+          "t_pred": 2,
+          "t_actual": 7,
+          "confidence": 0.16920824348926544
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 20.0,
+          "step": 1,
+          "t_pred": 3,
+          "t_actual": 4,
+          "confidence": 0.2551420331001282
+        }
+      ]
+    }
+  },
+  "xgboost": {
+    "horizon": 5,
+    "window_duration_sec": 20.0,
+    "total_eval_samples": 9,
+    "k_step_accuracy": {
+      "step_1 (+20s)": 0.2222,
+      "step_2 (+40s)": 0.25,
+      "step_3 (+60s)": 0.2857,
+      "step_4 (+80s)": 0.3333,
+      "step_5 (+100s)": 0.2
+    },
+    "k_step_top2_accuracy": {
+      "step_1 (+20s)": 0.5556,
+      "step_2 (+40s)": 0.5,
+      "step_3 (+60s)": 0.4286,
+      "step_4 (+80s)": 0.5,
+      "step_5 (+100s)": 0.4
+    },
+    "trajectory_exact_match_accuracy": 0.0,
+    "trajectory_average_similarity": 0.28,
+    "forecast_lead_time": {
+      "mean_lead_time_sec": 55.56,
+      "max_lead_time_sec": 100.0,
+      "min_lead_time_sec": 20.0,
+      "total_successful_advance_forecasts": 9,
+      "false_warnings": 10,
+      "by_stage": {
+        "EXFILTRATION": {
+          "successful_forecasts": 9,
+          "mean_lead_time_sec": 55.56,
+          "max_lead_time_sec": 100.0
+        }
+      },
+      "sample_events": [
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 80.0,
+          "step": 4,
+          "t_pred": 0,
+          "t_actual": 4,
+          "confidence": 0.9720920324325562
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 60.0,
+          "step": 3,
+          "t_pred": 1,
+          "t_actual": 4,
+          "confidence": 0.9720920324325562
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 40.0,
+          "step": 2,
+          "t_pred": 2,
+          "t_actual": 4,
+          "confidence": 0.9718224406242371
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 100.0,
+          "step": 5,
+          "t_pred": 2,
+          "t_actual": 7,
+          "confidence": 0.9720920324325562
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 20.0,
+          "step": 1,
+          "t_pred": 3,
+          "t_actual": 4,
+          "confidence": 0.9526183009147644
+        }
+      ]
+    }
+  },
+  "lr": {
+    "horizon": 5,
+    "window_duration_sec": 20.0,
+    "total_eval_samples": 9,
+    "k_step_accuracy": {
+      "step_1 (+20s)": 0.2222,
+      "step_2 (+40s)": 0.25,
+      "step_3 (+60s)": 0.2857,
+      "step_4 (+80s)": 0.3333,
+      "step_5 (+100s)": 0.2
+    },
+    "k_step_top2_accuracy": {
+      "step_1 (+20s)": 0.5556,
+      "step_2 (+40s)": 0.5,
+      "step_3 (+60s)": 0.4286,
+      "step_4 (+80s)": 0.5,
+      "step_5 (+100s)": 0.4
+    },
+    "trajectory_exact_match_accuracy": 0.0,
+    "trajectory_average_similarity": 0.28,
+    "forecast_lead_time": {
+      "mean_lead_time_sec": 55.56,
+      "max_lead_time_sec": 100.0,
+      "min_lead_time_sec": 20.0,
+      "total_successful_advance_forecasts": 9,
+      "false_warnings": 10,
+      "by_stage": {
+        "EXFILTRATION": {
+          "successful_forecasts": 9,
+          "mean_lead_time_sec": 55.56,
+          "max_lead_time_sec": 100.0
+        }
+      },
+      "sample_events": [
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 80.0,
+          "step": 4,
+          "t_pred": 0,
+          "t_actual": 4,
+          "confidence": 0.6717619895935059
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 60.0,
+          "step": 3,
+          "t_pred": 1,
+          "t_actual": 4,
+          "confidence": 0.7234706878662109
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 40.0,
+          "step": 2,
+          "t_pred": 2,
+          "t_actual": 4,
+          "confidence": 0.8102031350135803
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 100.0,
+          "step": 5,
+          "t_pred": 2,
+          "t_actual": 7,
+          "confidence": 0.6465833187103271
+        },
+        {
+          "stage_id": 8,
+          "stage_name": "EXFILTRATION",
+          "lead_time_sec": 20.0,
+          "step": 1,
+          "t_pred": 3,
+          "t_actual": 4,
+          "confidence": 0.9985634684562683
+        }
+      ]
+    }
+  }
+}

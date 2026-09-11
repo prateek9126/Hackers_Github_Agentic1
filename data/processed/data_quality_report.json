@@ -1,0 +1,787 @@
+{
+  "timestamp": "2026-09-07T18:56:27.846829+00:00",
+  "pipeline_config": {
+    "window_duration_sec": 20.0,
+    "history_window_w": 4,
+    "forecast_horizon_k": 1,
+    "feature_dimension": 55,
+    "train_ratio": 0.7,
+    "val_ratio": 0.15,
+    "test_ratio": 0.15
+  },
+  "cleaning_summary": {
+    "file_path": "data/raw/ctu13_scenario5.binetflow",
+    "total_raw_rows": 129832,
+    "exact_duplicates_removed": 0,
+    "clean_records_retained": 129832,
+    "missing_values_imputed": {
+      "Sport": 797,
+      "Dport": 377,
+      "sTos": 858,
+      "dTos": 6896
+    },
+    "start_time": "2011-08-15T16:43:20.931208+00:00",
+    "end_time": "2011-08-15T17:13:26.758894+00:00",
+    "duration_seconds": 1805.827686
+  },
+  "label_mapping_audit": [
+    {
+      "dataset_label": "flow=To-Background-UDP-CVUT-DNS-Server",
+      "count": 50817,
+      "percentage": 39.14,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Outbound background university traffic to benign public infrastructure.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=Background-UDP-Established",
+      "count": 37203,
+      "percentage": 28.65,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-TCP-Established",
+      "count": 15156,
+      "percentage": 11.67,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-Established-cmpgw-CVUT",
+      "count": 9331,
+      "percentage": 7.19,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background",
+      "count": 3426,
+      "percentage": 2.64,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-UDP-Attempt",
+      "count": 2893,
+      "percentage": 2.23,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-TCP-Attempt",
+      "count": 1847,
+      "percentage": 1.42,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=From-Normal-V46-Stribrek",
+      "count": 1810,
+      "percentage": 1.39,
+      "mapped_stage": "NORMAL",
+      "confidence": 1.0,
+      "reasoning": "Explicitly verified benign control workstation traffic.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=From-Normal-V46-Grill",
+      "count": 1722,
+      "percentage": 1.33,
+      "mapped_stage": "NORMAL",
+      "confidence": 1.0,
+      "reasoning": "Explicitly verified benign control workstation traffic.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=To-Background-CVUT-Proxy",
+      "count": 1340,
+      "percentage": 1.03,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Outbound background university traffic to benign public infrastructure.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=From-Normal-V46-Jist",
+      "count": 1107,
+      "percentage": 0.85,
+      "mapped_stage": "NORMAL",
+      "confidence": 1.0,
+      "reasoning": "Explicitly verified benign control workstation traffic.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=Background-Attempt-cmpgw-CVUT",
+      "count": 470,
+      "percentage": 0.36,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Attempt",
+      "count": 422,
+      "percentage": 0.33,
+      "mapped_stage": "SCANNING",
+      "confidence": 0.9,
+      "reasoning": "Infected host sending rapid TCP SYN probes across wide IP ranges without ACK.",
+      "limitations": "Could occasionally represent unreachable C2 dead ends."
+    },
+    {
+      "dataset_label": "flow=Background-UDP-NTP-Established-1",
+      "count": 317,
+      "percentage": 0.24,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=To-Background-CVUT-WebServer",
+      "count": 254,
+      "percentage": 0.2,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Outbound background university traffic to benign public infrastructure.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Not-Encrypted-SMTP-Private-Proxy-1",
+      "count": 181,
+      "percentage": 0.14,
+      "mapped_stage": "EXFILTRATION",
+      "confidence": 0.85,
+      "reasoning": "Bot relaying bulk unauthorized SMTP payload through private proxies.",
+      "limitations": "Classified under exfiltration due to outbound bulk transmission semantics."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics4",
+      "count": 128,
+      "percentage": 0.1,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics5",
+      "count": 87,
+      "percentage": 0.07,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics1",
+      "count": 82,
+      "percentage": 0.06,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=To-Background-MatLab-Server",
+      "count": 74,
+      "percentage": 0.06,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Outbound background university traffic to benign public infrastructure.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics8",
+      "count": 73,
+      "percentage": 0.06,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-webmail",
+      "count": 72,
+      "percentage": 0.06,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics16",
+      "count": 57,
+      "percentage": 0.04,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=From-Background-CVUT-Proxy",
+      "count": 55,
+      "percentage": 0.04,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Inbound background campus traffic from external benign hosts.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics2",
+      "count": 53,
+      "percentage": 0.04,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics10",
+      "count": 52,
+      "percentage": 0.04,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics15",
+      "count": 49,
+      "percentage": 0.04,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics12",
+      "count": 49,
+      "percentage": 0.04,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-UDP-DNS",
+      "count": 49,
+      "percentage": 0.04,
+      "mapped_stage": "RECONNAISSANCE",
+      "confidence": 0.85,
+      "reasoning": "Bot querying DNS infrastructure to discover candidate C2 rendezvous points or external targets.",
+      "limitations": "DNS resolution technically bridges Reconnaissance and C2 rendezvous."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics13",
+      "count": 48,
+      "percentage": 0.04,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics7",
+      "count": 48,
+      "percentage": 0.04,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics14",
+      "count": 42,
+      "percentage": 0.03,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics6",
+      "count": 39,
+      "percentage": 0.03,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics3",
+      "count": 37,
+      "percentage": 0.03,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-www.fel.cvut.cz",
+      "count": 34,
+      "percentage": 0.03,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics11",
+      "count": 31,
+      "percentage": 0.02,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-pop",
+      "count": 23,
+      "percentage": 0.02,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=Background-google-analytics9",
+      "count": 21,
+      "percentage": 0.02,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-To-Microsoft-6",
+      "count": 21,
+      "percentage": 0.02,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Attempt-SPAM",
+      "count": 19,
+      "percentage": 0.01,
+      "mapped_stage": "SCANNING",
+      "confidence": 0.9,
+      "reasoning": "Infected host sending rapid TCP SYN probes across wide IP ranges without ACK.",
+      "limitations": "Could occasionally represent unreachable C2 dead ends."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-SPAM",
+      "count": 19,
+      "percentage": 0.01,
+      "mapped_stage": "EXFILTRATION",
+      "confidence": 0.8,
+      "reasoning": "Mass outbound data dissemination / email exfiltration using infected host as proxy.",
+      "limitations": "Spam is fundamentally an Impact activity, but network-wise functions as bulk exfil."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-HTTP-Google-Net-Established-2",
+      "count": 17,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.7,
+      "reasoning": "Malware probing Google network endpoints or ambient browsing.",
+      "limitations": "Unclear attack attribution; safely quarantined as UNMAPPED."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-Custom-Encryption-1",
+      "count": 17,
+      "percentage": 0.01,
+      "mapped_stage": "COMMAND_AND_CONTROL",
+      "confidence": 0.95,
+      "reasoning": "Proprietary XOR/RC4 encrypted channel between bot and C2 server.",
+      "limitations": "Some botnets use custom encryption for P2P routing."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-SSL-To-Microsoft-6",
+      "count": 16,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=To-Background-Grill",
+      "count": 15,
+      "percentage": 0.01,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Outbound background university traffic to benign public infrastructure.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=Background-ajax.google",
+      "count": 15,
+      "percentage": 0.01,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Campus network background traffic captured alongside botnet experiment.",
+      "limitations": "May occasionally contain untagged ambient university port probes."
+    },
+    {
+      "dataset_label": "flow=From-Normal-V46-CVUT-WebServer",
+      "count": 14,
+      "percentage": 0.01,
+      "mapped_stage": "NORMAL",
+      "confidence": 1.0,
+      "reasoning": "Explicitly verified benign control workstation traffic.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-Ad-46",
+      "count": 13,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.7,
+      "reasoning": "Click-fraud / ad-network impressions generated by botnet.",
+      "limitations": "Does not cleanly correspond to standard ATT&CK tactical progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-SSL-To-Microsoft-7",
+      "count": 13,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=To-Background-Jist",
+      "count": 11,
+      "percentage": 0.01,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Outbound background university traffic to benign public infrastructure.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=To-Normal-V46-UDP-NTP-server",
+      "count": 11,
+      "percentage": 0.01,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.5,
+      "reasoning": "Heuristic / Default mapping",
+      "limitations": "Unverified fallback"
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-CC12-HTTP-Not-Encrypted",
+      "count": 11,
+      "percentage": 0.01,
+      "mapped_stage": "COMMAND_AND_CONTROL",
+      "confidence": 1.0,
+      "reasoning": "Direct interactive or beaconing command and control channel with botmaster.",
+      "limitations": "None; ground truth verified in CTU sandbox logs."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-WEB-Established-SSL",
+      "count": 10,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.6,
+      "reasoning": "Unclassified web traffic initiated by botnet host.",
+      "limitations": "Payload details absent from NetFlow; unmappable with high confidence."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-To-Microsoft-7",
+      "count": 10,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-To-Microsoft-5",
+      "count": 9,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-To-Microsoft-4",
+      "count": 9,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=Normal-V46-HTTP-windowsupdate",
+      "count": 8,
+      "percentage": 0.01,
+      "mapped_stage": "NORMAL",
+      "confidence": 1.0,
+      "reasoning": "Verified normal Windows update and internal host traffic.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-CC5-Plain-HTTP-Encrypted-Data",
+      "count": 7,
+      "percentage": 0.01,
+      "mapped_stage": "COMMAND_AND_CONTROL",
+      "confidence": 1.0,
+      "reasoning": "Direct interactive or beaconing command and control channel with botmaster.",
+      "limitations": "None; ground truth verified in CTU sandbox logs."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-To-Microsoft-Live-1",
+      "count": 7,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-To-Microsoft-Live-3",
+      "count": 7,
+      "percentage": 0.01,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-SSL-To-Microsoft-4",
+      "count": 6,
+      "percentage": 0.0,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-To-Microsoft-Live-2",
+      "count": 6,
+      "percentage": 0.0,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=From-Normal-V46-UDP-CVUT-DNS-Server",
+      "count": 5,
+      "percentage": 0.0,
+      "mapped_stage": "NORMAL",
+      "confidence": 1.0,
+      "reasoning": "Explicitly verified benign control workstation traffic.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-WEB-Established",
+      "count": 5,
+      "percentage": 0.0,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.6,
+      "reasoning": "Unclassified web traffic initiated by botnet host.",
+      "limitations": "Payload details absent from NetFlow; unmappable with high confidence."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-CC1-HTTP-Not-Encrypted",
+      "count": 5,
+      "percentage": 0.0,
+      "mapped_stage": "COMMAND_AND_CONTROL",
+      "confidence": 1.0,
+      "reasoning": "Direct interactive or beaconing command and control channel with botmaster.",
+      "limitations": "None; ground truth verified in CTU sandbox logs."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-SSL-To-Microsoft-5",
+      "count": 5,
+      "percentage": 0.0,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-Binary-Download-3",
+      "count": 4,
+      "percentage": 0.0,
+      "mapped_stage": "INITIAL_ACCESS",
+      "confidence": 0.95,
+      "reasoning": "Bot retrieves secondary modular executables or packed malware stages.",
+      "limitations": "Payload download occurs post-initial breach in dropper architectures."
+    },
+    {
+      "dataset_label": "flow=To-Background-Stribrek",
+      "count": 3,
+      "percentage": 0.0,
+      "mapped_stage": "NORMAL",
+      "confidence": 0.95,
+      "reasoning": "Outbound background university traffic to benign public infrastructure.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-SSL-To-Microsoft-3",
+      "count": 3,
+      "percentage": 0.0,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.8,
+      "reasoning": "Malware background connectivity check against Windows update / Live infrastructure.",
+      "limitations": "Ambient connectivity verification, does not represent attack kill chain progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-UDP-Attempt-DNS",
+      "count": 3,
+      "percentage": 0.0,
+      "mapped_stage": "RECONNAISSANCE",
+      "confidence": 0.85,
+      "reasoning": "Bot querying DNS infrastructure to discover candidate C2 rendezvous points or external targets.",
+      "limitations": "DNS resolution technically bridges Reconnaissance and C2 rendezvous."
+    },
+    {
+      "dataset_label": "flow=From-Normal-V46-MatLab-Server",
+      "count": 2,
+      "percentage": 0.0,
+      "mapped_stage": "NORMAL",
+      "confidence": 1.0,
+      "reasoning": "Explicitly verified benign control workstation traffic.",
+      "limitations": "None."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-Binary-Download-1",
+      "count": 2,
+      "percentage": 0.0,
+      "mapped_stage": "INITIAL_ACCESS",
+      "confidence": 0.95,
+      "reasoning": "Bot retrieves secondary modular executables or packed malware stages.",
+      "limitations": "Payload download occurs post-initial breach in dropper architectures."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-HTTP-Google-Net-Established-6",
+      "count": 1,
+      "percentage": 0.0,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.7,
+      "reasoning": "Malware probing Google network endpoints or ambient browsing.",
+      "limitations": "Unclear attack attribution; safely quarantined as UNMAPPED."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-CC7-Custom-Encryption",
+      "count": 1,
+      "percentage": 0.0,
+      "mapped_stage": "COMMAND_AND_CONTROL",
+      "confidence": 1.0,
+      "reasoning": "Direct interactive or beaconing command and control channel with botmaster.",
+      "limitations": "None; ground truth verified in CTU sandbox logs."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-HTTP-Ad-4",
+      "count": 1,
+      "percentage": 0.0,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.7,
+      "reasoning": "Click-fraud / ad-network impressions generated by botnet.",
+      "limitations": "Does not cleanly correspond to standard ATT&CK tactical progression."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established-Custom-Encryption-8",
+      "count": 1,
+      "percentage": 0.0,
+      "mapped_stage": "COMMAND_AND_CONTROL",
+      "confidence": 0.95,
+      "reasoning": "Proprietary XOR/RC4 encrypted channel between bot and C2 server.",
+      "limitations": "Some botnets use custom encryption for P2P routing."
+    },
+    {
+      "dataset_label": "flow=From-Botnet-V46-TCP-Established",
+      "count": 1,
+      "percentage": 0.0,
+      "mapped_stage": "UNMAPPED",
+      "confidence": 0.5,
+      "reasoning": "Heuristic / Default mapping",
+      "limitations": "Unverified fallback"
+    }
+  ],
+  "temporal_state_distribution": {
+    "NORMAL": 33,
+    "RECONNAISSANCE": 1,
+    "INITIAL_ACCESS": 1,
+    "SCANNING": 14,
+    "COMMAND_AND_CONTROL": 10,
+    "EXFILTRATION": 32
+  },
+  "partitions": {
+    "train": {
+      "num_windows": 65,
+      "start": "2011-08-15T16:43:20.931208+00:00",
+      "end": "2011-08-15T17:05:00.931208+00:00",
+      "sequences_X_shape": [
+        61,
+        4,
+        55
+      ],
+      "targets_Y_shape": [
+        61,
+        1
+      ]
+    },
+    "validation": {
+      "num_windows": 13,
+      "start": "2011-08-15T17:05:00.931208+00:00",
+      "end": "2011-08-15T17:09:20.931208+00:00",
+      "sequences_X_shape": [
+        9,
+        4,
+        55
+      ],
+      "targets_Y_shape": [
+        9,
+        1
+      ]
+    },
+    "test": {
+      "num_windows": 13,
+      "start": "2011-08-15T17:09:20.931208+00:00",
+      "end": "2011-08-15T17:13:40.931208+00:00",
+      "sequences_X_shape": [
+        9,
+        4,
+        55
+      ],
+      "targets_Y_shape": [
+        9,
+        1
+      ]
+    }
+  },
+  "leakage_checks_passed": [
+    "Strict chronological record monotonicity validated",
+    "Causal window boundary integrity validated (flows < window_end)",
+    "Temporal partition separation validated (max(train) <= min(val) <= min(test))",
+    "Feature normalizer fitted strictly on training partition",
+    "Sequence target causality validated (y(t+1) occurs strictly after S(t))"
+  ],
+  "limitations_and_assumptions": [
+    "Background university traffic is treated as NORMAL, but may contain ambient Internet port probes.",
+    "SPAM activity is mapped to EXFILTRATION based on bulk outbound transmission characteristics.",
+    "Multi-stage progression in single-scenario botnet captures is limited to infection lifespan (~30 minutes in Scenario 5).",
+    "Windows with zero traffic are zero-padded with baseline normal indicators."
+  ]
+}

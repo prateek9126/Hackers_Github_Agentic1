@@ -1,0 +1,792 @@
+{
+  "dataset": "CTU-13 Scenario 5 (Virut Botnet)",
+  "prediction_task": "Next Attack Stage Forecasting: S(t) or [S(t-3)..S(t)] -> S(t+1)",
+  "models": {
+    "Logistic Regression": {
+      "type": "Instantaneous (Non-Temporal)",
+      "input": "S(t) (Current window only)",
+      "metrics": {
+        "accuracy": 0.2222,
+        "precision_macro": 0.0556,
+        "recall_macro": 0.25,
+        "f1_macro": 0.0909,
+        "precision_weighted": 0.0494,
+        "recall_weighted": 0.2222,
+        "f1_weighted": 0.0808,
+        "normal_false_positive_rate": 1.0,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "canonical_classes": [
+          "NORMAL",
+          "RECONNAISSANCE",
+          "SCANNING",
+          "INITIAL_ACCESS",
+          "EXPLOITATION",
+          "CREDENTIAL_ACCESS",
+          "LATERAL_MOVEMENT",
+          "COMMAND_AND_CONTROL",
+          "EXFILTRATION",
+          "IMPACT_DOS"
+        ],
+        "per_class_metrics": {
+          "NORMAL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 2,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "tn": 7
+          },
+          "RECONNAISSANCE": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "SCANNING": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 3,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "tn": 6
+          },
+          "INITIAL_ACCESS": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "EXPLOITATION": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "CREDENTIAL_ACCESS": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "LATERAL_MOVEMENT": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "COMMAND_AND_CONTROL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 2,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "tn": 7
+          },
+          "EXFILTRATION": {
+            "precision": 0.2222,
+            "recall": 1.0,
+            "f1_score": 0.3636,
+            "support": 2,
+            "false_positive_rate": 1.0,
+            "tp": 2,
+            "fp": 7,
+            "fn": 0,
+            "tn": 0
+          },
+          "IMPACT_DOS": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          }
+        }
+      }
+    },
+    "XGBoost": {
+      "type": "Instantaneous (Non-Temporal)",
+      "input": "S(t) (Current window only)",
+      "metrics": {
+        "accuracy": 0.2222,
+        "precision_macro": 0.0556,
+        "recall_macro": 0.25,
+        "f1_macro": 0.0909,
+        "precision_weighted": 0.0494,
+        "recall_weighted": 0.2222,
+        "f1_weighted": 0.0808,
+        "normal_false_positive_rate": 1.0,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "canonical_classes": [
+          "NORMAL",
+          "RECONNAISSANCE",
+          "SCANNING",
+          "INITIAL_ACCESS",
+          "EXPLOITATION",
+          "CREDENTIAL_ACCESS",
+          "LATERAL_MOVEMENT",
+          "COMMAND_AND_CONTROL",
+          "EXFILTRATION",
+          "IMPACT_DOS"
+        ],
+        "per_class_metrics": {
+          "NORMAL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 2,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "tn": 7
+          },
+          "RECONNAISSANCE": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "SCANNING": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 3,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "tn": 6
+          },
+          "INITIAL_ACCESS": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "EXPLOITATION": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "CREDENTIAL_ACCESS": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "LATERAL_MOVEMENT": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "COMMAND_AND_CONTROL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 2,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "tn": 7
+          },
+          "EXFILTRATION": {
+            "precision": 0.2222,
+            "recall": 1.0,
+            "f1_score": 0.3636,
+            "support": 2,
+            "false_positive_rate": 1.0,
+            "tp": 2,
+            "fp": 7,
+            "fn": 0,
+            "tn": 0
+          },
+          "IMPACT_DOS": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          }
+        }
+      }
+    },
+    "Temporal LSTM": {
+      "type": "Sequential (Temporal)",
+      "input": "[S(t-3), S(t-2), S(t-1), S(t)]",
+      "metrics": {
+        "accuracy": 0.2222,
+        "precision_macro": 0.0556,
+        "recall_macro": 0.25,
+        "f1_macro": 0.0909,
+        "precision_weighted": 0.0494,
+        "recall_weighted": 0.2222,
+        "f1_weighted": 0.0808,
+        "normal_false_positive_rate": 1.0,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "canonical_classes": [
+          "NORMAL",
+          "RECONNAISSANCE",
+          "SCANNING",
+          "INITIAL_ACCESS",
+          "EXPLOITATION",
+          "CREDENTIAL_ACCESS",
+          "LATERAL_MOVEMENT",
+          "COMMAND_AND_CONTROL",
+          "EXFILTRATION",
+          "IMPACT_DOS"
+        ],
+        "per_class_metrics": {
+          "NORMAL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 2,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "tn": 7
+          },
+          "RECONNAISSANCE": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "SCANNING": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 3,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "tn": 6
+          },
+          "INITIAL_ACCESS": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "EXPLOITATION": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "CREDENTIAL_ACCESS": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "LATERAL_MOVEMENT": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          },
+          "COMMAND_AND_CONTROL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 2,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "tn": 7
+          },
+          "EXFILTRATION": {
+            "precision": 0.2222,
+            "recall": 1.0,
+            "f1_score": 0.3636,
+            "support": 2,
+            "false_positive_rate": 1.0,
+            "tp": 2,
+            "fp": 7,
+            "fn": 0,
+            "tn": 0
+          },
+          "IMPACT_DOS": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0,
+            "false_positive_rate": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 9
+          }
+        }
+      }
+    }
+  },
+  "ground_truth_test_distribution": {
+    "NORMAL": 2,
+    "SCANNING": 3,
+    "COMMAND_AND_CONTROL": 2,
+    "EXFILTRATION": 2
+  }
+}
