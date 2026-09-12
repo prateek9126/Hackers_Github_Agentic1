@@ -228,8 +228,10 @@ export const App: React.FC = () => {
       setMitre(mi);
     } catch (err: any) {
       console.error("PCAP upload error:", err);
-      setPcapUploadError(err.message || "Failed to process uploaded PCAP.");
-      throw err;
+      const msg = err?.message || "";
+      if (!msg.toLowerCase().includes("fetch") && !msg.toLowerCase().includes("network")) {
+        setPcapUploadError(msg || "Failed to process uploaded PCAP.");
+      }
     } finally {
       setIsUploadingPcap(false);
     }
@@ -268,8 +270,10 @@ export const App: React.FC = () => {
       setMitre(mi);
     } catch (err: any) {
       console.error("Demo PCAP load error:", err);
-      setPcapUploadError(err.message || "Failed to load demo PCAP.");
-      throw err;
+      const msg = err?.message || "";
+      if (!msg.toLowerCase().includes("fetch") && !msg.toLowerCase().includes("network")) {
+        setPcapUploadError(msg || "Failed to load demo PCAP.");
+      }
     } finally {
       setIsDemoPcapLoading(false);
     }

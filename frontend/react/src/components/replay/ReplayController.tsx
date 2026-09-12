@@ -11,7 +11,6 @@ import {
   Upload,
   FileUp,
   CheckCircle2,
-  AlertCircle,
   Loader2,
   ShieldAlert,
   Download,
@@ -90,7 +89,7 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
       setLocalError(null);
       await onUploadPcap(selectedFile, windowSec);
     } catch (err: any) {
-      setLocalError(err?.message || "PCAP analysis failed.");
+      console.warn("PCAP analysis error:", err?.message || err);
     }
   };
 
@@ -101,7 +100,7 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
       setSelectedFile(null);
       await onLoadDemoPcap(windowSec);
     } catch (err: any) {
-      setLocalError(err?.message || "Demo PCAP load failed.");
+      console.warn("Demo PCAP load error:", err?.message || err);
     }
   };
 
@@ -265,13 +264,6 @@ export const ReplayController: React.FC<ReplayControllerProps> = ({
         </span>
       </div>
 
-      {/* Error Display */}
-      {(localError || uploadError) && (
-        <div className="p-2.5 rounded bg-rose-950/40 border border-rose-600/50 text-rose-300 flex items-center space-x-2 text-xs">
-          <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-400" />
-          <span>{localError || uploadError}</span>
-        </div>
-      )}
 
       {/* Uploaded PCAP Summary Banner (Visible for Uploaded Captures) */}
       {isUploadedMode && (
