@@ -48,5 +48,4 @@ class Settings(BaseSettings):
     "https://sih26153-forecasting-dashboard.onrender.com",
 ]
 
-
 settings = Settings()
