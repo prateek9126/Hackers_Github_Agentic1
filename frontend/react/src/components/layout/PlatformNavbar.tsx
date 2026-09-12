@@ -26,6 +26,7 @@ const PLATFORM_TABS: { id: PageId; label: string }[] = [
   { id: "trajectory", label: "Trajectory" },
   { id: "explainability", label: "Explainability" },
   { id: "simulation", label: "Simulation" },
+  { id: "real-world-defense", label: "Real-World Defense" },
   { id: "results", label: "Results" },
 ];
 

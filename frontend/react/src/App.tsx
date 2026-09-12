@@ -8,6 +8,7 @@ import { PageId } from "./components/layout/Navbar";
 import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
 import { HowItWorksPage } from "./pages/HowItWorksPage";
+import { RealWorldDefensePage } from "./pages/RealWorldDefensePage";
 import { ForecastPage } from "./pages/ForecastPage";
 import { TrajectoryPage } from "./pages/TrajectoryPage";
 import { ExplainabilityPage } from "./pages/ExplainabilityPage";
@@ -32,6 +33,7 @@ const VALID_PAGES: PageId[] = [
   "home",
   "about",
   "how-it-works",
+  "real-world-defense",
   "forecast",
   "trajectory",
   "explainability",
@@ -325,19 +327,25 @@ export const App: React.FC = () => {
     handleReplayStep(0);
   };
 
-  const isLandingPage = currentPage === "home";
+  const isLandingPage =
+    currentPage === "home" ||
+    currentPage === "about" ||
+    currentPage === "how-it-works" ||
+    currentPage === "real-world-defense";
 
   return (
     <div className="min-h-screen bg-cyber-950 text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-slate-950">
       {/* 
         CONDITIONAL HEADER:
-        1. On Landing Page: Minimal floating premium header (RAKSHAK | About, How It Works, Launch Platform)
+        1. On Public Pages (Home, About, How It Works, Real-World Defense): Minimal floating premium header
         2. In Platform Dashboard: Application navigation (Forecast, Trajectory, Explainability, etc.) with exit button
       */}
       {isLandingPage ? (
         <LandingHeader
+          currentPage={currentPage}
           onLaunchPlatform={() => handleNavigate("forecast")}
           onNavigateSection={handleLandingSectionScroll}
+          onNavigatePage={handleNavigate}
         />
       ) : (
         <PlatformNavbar
@@ -359,6 +367,13 @@ export const App: React.FC = () => {
 
         {currentPage === "how-it-works" && (
           <HowItWorksPage onNavigate={handleNavigate} />
+        )}
+
+        {currentPage === "real-world-defense" && (
+          <RealWorldDefensePage
+            onNavigate={handleNavigate}
+            onLaunchPlatform={() => handleNavigate("forecast")}
+          />
         )}
 
         {currentPage === "forecast" && (

@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, ArrowRight, Activity } from "lucide-react";
+import { PageId } from "./Navbar";
 
 interface LandingHeaderProps {
+  currentPage?: PageId;
   onLaunchPlatform: () => void;
   onNavigateSection: (sectionId: "about" | "how-it-works") => void;
+  onNavigatePage: (page: PageId) => void;
 }
 
 export const LandingHeader: React.FC<LandingHeaderProps> = ({
+  currentPage,
   onLaunchPlatform,
   onNavigateSection,
+  onNavigatePage,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -26,6 +31,11 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
     onNavigateSection(sectionId);
   };
 
+  const handlePageClick = (pageId: PageId) => {
+    setMobileMenuOpen(false);
+    onNavigatePage(pageId);
+  };
+
   return (
     <header className="sticky top-4 z-50 px-4 sm:px-6 w-full pointer-events-none">
       <div
@@ -39,6 +49,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
         {/* Left Side: Clean Logo & Subtitle */}
         <button
           onClick={() => {
+            onNavigatePage("home");
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           className="flex items-center space-x-3 text-left group focus:outline-none"
@@ -54,8 +65,8 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
           </div>
         </button>
 
-        {/* Right Side: ONLY About, How It Works, and Launch Platform */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-sans">
+        {/* Right Side: About, How It Works, Real-World Defense, Launch Platform */}
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-sans">
           <button
             onClick={() => handleNavClick("about")}
             className="text-slate-300 hover:text-white transition-colors font-medium tracking-wide"
@@ -68,6 +79,21 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
             className="text-slate-300 hover:text-white transition-colors font-medium tracking-wide"
           >
             How It Works
+          </button>
+
+          {/* Real-World Defense */}
+          <button
+            onClick={() => handlePageClick("real-world-defense")}
+            className={`transition-all duration-200 font-medium tracking-wide relative py-1 flex items-center space-x-1.5 ${
+              currentPage === "real-world-defense"
+                ? "text-cyan-300 font-semibold"
+                : "text-slate-300 hover:text-white hover:text-cyan-200"
+            }`}
+          >
+            <span>Real-World Defense</span>
+            {currentPage === "real-world-defense" && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full shadow-sm shadow-cyan-400/50 animate-fadeIn" />
+            )}
           </button>
 
           {/* Premium CTA Button */}
@@ -101,7 +127,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden max-w-5xl mx-auto mt-2 p-4 rounded-2xl bg-cyber-950/95 backdrop-blur-2xl border border-white/10 shadow-2xl pointer-events-auto space-y-3 animate-fadeIn text-sm font-sans">
+        <div className="md:hidden max-w-5xl mx-auto mt-2 p-4 rounded-2xl bg-cyber-950/95 backdrop-blur-2xl border border-white/10 shadow-2xl pointer-events-auto space-y-2 animate-fadeIn text-sm font-sans">
           <button
             onClick={() => handleNavClick("about")}
             className="w-full text-left p-2.5 rounded-xl text-slate-200 hover:bg-slate-900 transition-colors"
@@ -114,6 +140,20 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
             className="w-full text-left p-2.5 rounded-xl text-slate-200 hover:bg-slate-900 transition-colors"
           >
             How It Works
+          </button>
+
+          <button
+            onClick={() => handlePageClick("real-world-defense")}
+            className={`w-full text-left p-2.5 rounded-xl transition-colors flex items-center justify-between ${
+              currentPage === "real-world-defense"
+                ? "bg-cyan-950/70 text-cyan-300 font-semibold border border-cyan-500/30"
+                : "text-slate-200 hover:bg-slate-900"
+            }`}
+          >
+            <span>Real-World Defense</span>
+            <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+              Scenarios
+            </span>
           </button>
 
           <div className="pt-2 border-t border-slate-800">

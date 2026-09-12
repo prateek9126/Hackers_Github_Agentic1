@@ -16,6 +16,7 @@ export type PageId =
   | "home"
   | "about"
   | "how-it-works"
+  | "real-world-defense"
   | "forecast"
   | "trajectory"
   | "explainability"
@@ -41,6 +42,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
   { id: "how-it-works", label: "How It Works" },
+  { id: "real-world-defense", label: "Real-World Defense", badge: "Live" },
   { id: "forecast", label: "Forecast", badge: "Live ML" },
   { id: "trajectory", label: "Trajectory" },
   { id: "explainability", label: "Explainability", badge: "SHAP" },
