@@ -129,7 +129,7 @@ export const App: React.FC = () => {
         apiService.getMitre(),
         apiService.getRisk(),
         apiService.getMetrics(),
-        apiService.getReplayTimeline(selectedScenario),
+        apiService.getReplayTimeline("synthetic"),
       ]);
 
       setCurrentState(st);
@@ -143,7 +143,7 @@ export const App: React.FC = () => {
     } catch (err) {
       console.error("Initial data load error:", err);
     }
-  }, [selectedScenario]);
+  }, []);
 
   useEffect(() => {
     loadInitialData();
@@ -243,31 +243,56 @@ export const App: React.FC = () => {
     setPcapUploadError(null);
     try {
       const demoRes = await apiService.loadDemoPcap(windowDurationSec);
-      setSelectedScenario(demoRes.scenario_id);
+      
+      const scenarioId = demoRes.scenario_id || "demo_pcap";
+      setSelectedScenario(scenarioId);
       setIsPlaying(false);
       setReplayStep(0);
       setLeadTimeEvaluations([]);
-      await apiService.resetReplay();
 
-      const tl = await apiService.getReplayTimeline(demoRes.scenario_id);
+      // 1. Construct and set full timeline immediately from demoRes
+      const tl: ReplayTimelineResponse = {
+        scenario_id: scenarioId,
+        scenario_name: demoRes.scenario_name || "demo_attack_progression.pcap",
+        scenario_type: demoRes.scenario_type || "DEMO_PCAP",
+        total_steps: demoRes.total_windows || demoRes.timeline?.length || 5,
+        window_duration_sec: demoRes.window_duration_sec || windowDurationSec,
+        description: demoRes.message || "Built-in Demo Attack Progression PCAP capture",
+        available_scenarios: [
+          { id: "synthetic", name: "Multi-Stage Attack Kill Chain (10 Windows)", type: "DEMO/SYNTHETIC", total_steps: 10 },
+          { id: "ctu13", name: "CTU-13 Scenario 5 (Virut Botnet Capture)", type: "REAL_DATASET", total_steps: 9 },
+          { id: "demo_pcap", name: demoRes.scenario_name || "demo_attack_progression.pcap", type: "DEMO_PCAP", total_steps: demoRes.total_windows || 5 },
+        ],
+        timeline: demoRes.timeline || [],
+        has_ground_truth: demoRes.has_ground_truth || false,
+        pcap_filename: demoRes.filename || "demo_attack_progression.pcap",
+        packet_count: demoRes.packet_count || 14,
+        file_size_bytes: demoRes.file_size_bytes || 22083,
+        duration_sec: demoRes.duration_sec || 82.0,
+        status: demoRes.status || "ANALYZED",
+      };
       setReplayTimeline(tl);
 
+      // 2. Fire reset asynchronously without blocking
+      apiService.resetReplay().catch(() => {});
+
+      // 3. Execute step 0 for the demo PCAP
       const res = await apiService.executeReplayStep({
-        scenario_id: demoRes.scenario_id,
+        scenario_id: scenarioId,
         step_index: 0,
         horizon: 5,
       });
-      setCurrentState(res.current_state);
-      setForecast(res.forecast);
-      setTrajectory(res.trajectory);
-      setLeadTimeEvaluations(res.lead_time_evaluations);
 
-      const [ex, mi] = await Promise.all([
-        apiService.getExplanation(4),
-        apiService.getMitre(),
-      ]);
-      setExplanation(ex);
-      setMitre(mi);
+      if (res) {
+        if (res.current_state) setCurrentState(res.current_state);
+        if (res.forecast) setForecast(res.forecast);
+        if (res.trajectory) setTrajectory(res.trajectory);
+        if (res.lead_time_evaluations) setLeadTimeEvaluations(res.lead_time_evaluations);
+      }
+
+      // 4. Background non-blocking enrichment
+      apiService.getExplanation(4).then(ex => ex && setExplanation(ex)).catch(() => {});
+      apiService.getMitre().then(mi => mi && setMitre(mi)).catch(() => {});
     } catch (err: any) {
       console.error("Demo PCAP load error:", err);
       const msg = err?.message || "";
@@ -286,6 +311,11 @@ export const App: React.FC = () => {
     setReplayStep(0);
     setLeadTimeEvaluations([]);
     await apiService.resetReplay();
+
+    if (scenario === "demo_pcap") {
+      await handleLoadDemoPcap(20);
+      return;
+    }
 
     const tl = await apiService.getReplayTimeline(scenario);
     setReplayTimeline(tl);

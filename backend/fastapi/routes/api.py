@@ -307,22 +307,33 @@ async def upload_pcap(
 
 
 # 13. Built-in Demonstration PCAP Loader Route
+def _find_demo_pcap_path() -> Optional[str]:
+    candidates = [
+        os.path.join("data", "samples", "demo_attack_progression.pcap"),
+        os.path.join(os.path.dirname(__file__), "..", "..", "..", "data", "samples", "demo_attack_progression.pcap"),
+        os.path.join(os.getcwd(), "data", "samples", "demo_attack_progression.pcap"),
+        os.path.join("..", "data", "samples", "demo_attack_progression.pcap"),
+    ]
+    for c in candidates:
+        norm = os.path.normpath(c)
+        if os.path.exists(norm):
+            return norm
+    if os.path.exists("data/uploads"):
+        for f in os.listdir("data/uploads"):
+            if "demo_attack_progression" in f:
+                return os.path.join("data", "uploads", f)
+    return None
+
+
+# 13. Built-in Demonstration PCAP Loader Route
 @router.post("/pcap/demo", response_model=PcapUploadResponse)
 def load_demo_pcap(window_duration_sec: float = Query(20.0)):
     """
     Loads and analyzes the built-in multi-stage demo attack progression PCAP.
     """
-    demo_path = os.path.join("data", "samples", "demo_attack_progression.pcap")
-    if not os.path.exists(demo_path):
-        upload_samples = [
-            os.path.join("data", "uploads", f)
-            for f in os.listdir("data/uploads")
-            if "demo_attack_progression" in f
-        ]
-        if upload_samples:
-            demo_path = upload_samples[0]
-        else:
-            raise HTTPException(status_code=404, detail="Demo PCAP file not found.")
+    demo_path = _find_demo_pcap_path()
+    if not demo_path:
+        raise HTTPException(status_code=404, detail="Demo PCAP file not found.")
 
     try:
         result = _replay_service.load_uploaded_pcap(
@@ -343,17 +354,9 @@ def get_demo_pcap_file():
     """
     from fastapi.responses import FileResponse
 
-    demo_path = os.path.join("data", "samples", "demo_attack_progression.pcap")
-    if not os.path.exists(demo_path):
-        upload_samples = [
-            os.path.join("data", "uploads", f)
-            for f in os.listdir("data/uploads")
-            if "demo_attack_progression" in f
-        ]
-        if upload_samples:
-            demo_path = upload_samples[0]
-        else:
-            raise HTTPException(status_code=404, detail="Demo PCAP file not found.")
+    demo_path = _find_demo_pcap_path()
+    if not demo_path:
+        raise HTTPException(status_code=404, detail="Demo PCAP file not found.")
 
     return FileResponse(
         path=demo_path,
